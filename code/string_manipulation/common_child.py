@@ -28,43 +28,27 @@ https://www.geeksforgeeks.org/python-program-for-longest-common-subsequence/
 '''
 
 
-def powerset(iterable):
-    s = list(iterable)
-    return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
-
-
 def commonChild(s1, s2):
-    uc1 = set(powerset(s1))
-    uc2 = set(powerset(s2))
+    # find the intersect of both strings i.e. characters found in both
+    common_characters = set(s1).intersection(set(s2))
 
-    itrsct = uc1.intersection(uc2)
-    return len(max(itrsct, key=len)) if itrsct else 0
+    # remove all characters not found in intersect
+    s1 = [c for c in s1 if c in common_characters]
+    s2 = [c for c in s2 if c in common_characters]
 
-
-# Dynamic Programming implementation of LCS problem
- 
-def commonChild(s1, s2):
-    # find the length of the strings
-    m = len(s1)
-    n = len(s2)
- 
-    # declaring the array for storing the dp values
-    L = [[None]*(n + 1) for i in range(m + 1)]
- 
-    """Following steps build L[m + 1][n + 1] in bottom up fashion
-    Note: L[i][j] contains length of LCS of s1[0..i-1]
-    and s2[0..j-1]"""
-    for i in range(m + 1):
-        for j in range(n + 1):
-            if i == 0 or j == 0 :
-                L[i][j] = 0
-            elif s1[i-1] == s2[j-1]:
-                L[i][j] = L[i-1][j-1]+1
+    l1, l2 = len(s1), len(s2)
+    # create a 2D list with dimensions
+    lcs = [[0] * (l2 + 1) for _ in range(l1 + 1)]
+    # interate over all character combinations
+    for i, c1 in enumerate(s1):
+        for j, c2 in enumerate(s2):
+            # if characters are equal, 
+            if c1 == c2:
+                lcs[i][j] = lcs[i - 1][j - 1] + 1
             else:
-                L[i][j] = max(L[i-1][j], L[i][j-1])
- 
-    # L[m][n] contains the length of LCS of s1[0..n-1] & s2[0..m-1]
-    return L[m][n]
+                lcs[i][j] = max(lcs[i][j - 1], lcs[i - 1][j])
+    
+    return lcs[l1 - 1][l2 - 1]
 
 tests = [
     ['HARRY', 'SALLY'],         # 2
