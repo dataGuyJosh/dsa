@@ -1,11 +1,5 @@
 #!/bin/python3
 
-import math
-import os
-import random
-import re
-import sys
-
 #
 # Complete the 'hourglassSum' function below.
 #
@@ -15,20 +9,26 @@ import sys
 
 
 def hourglassSum(arr):
-    max_sum = -math.inf
+    max_sum = -float('inf')
     for x in range(4):
         for y in range(4):
-            sum = \
-                arr[x][y] + arr[x][y + 1] + arr[x][y + 2] + \
+            current_sum = \
+                sum(arr[x][y:y + 3]) + \
                 arr[x + 1][y + 1] + \
-                arr[x + 2][y] + arr[x + 2][y + 1] + arr[x + 2][y + 2]
-            max_sum = max((max_sum, sum))
+                sum(arr[x + 2][y:y + 3])
+            max_sum = max(max_sum, current_sum)
 
     return max_sum
 
 
-arr = [[1, 1, 1, 0, 0, 0], [0, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 0],
-       [0, 0, 2, 4, 4, 0], [0, 0, 0, 2, 0, 0], [0, 0, 1, 2, 4, 0]]
+arr = [
+    [1, 1, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0],
+    [0, 0, 2, 4, 4, 0],
+    [0, 0, 0, 2, 0, 0],
+    [0, 0, 1, 2, 4, 0]
+]
 
 result = hourglassSum(arr)
 
