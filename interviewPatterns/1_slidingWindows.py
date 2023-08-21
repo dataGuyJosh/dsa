@@ -1,3 +1,4 @@
+from collections import Counter
 '''
 Sliding Windows
 In many problems involving an array or linked list,
@@ -17,12 +18,10 @@ In the array [1,4,2], 1 & 2 are consecutive but not contiguous (as 4 is between 
 
 e.g. [1,2,3,4,5], k = 3 --> [2, 3, 4]
 '''
+
 # naive approach, we're summing the same numbers multiple times
 
 
-
-
-from collections import Counter
 def subMeans(nums, k):
     means = []
     window = []
