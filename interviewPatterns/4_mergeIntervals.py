@@ -5,12 +5,12 @@ In these types of problems, we're asked to find and/or merge overlapping interva
 
 Given 2 intervals A & B, there will be 6 different ways 2 intervals relate to each other:
 (understanding this will help us understand all possible scenarios for this problem)
-- A & B don't overlap, A occurs 1st
-- A & B don't overlap, B occurs 1st
-- A & B overlap, B ends after A
-- A & B overlap, A ends after B
-- A overlaps B completely, A starts before and ends after B
-- B overlaps A completely, B starts before and ends after A
+- A & B don't overlap, A occurs 1st                         {A}[B]
+- A & B don't overlap, B occurs 1st                         [B]{A}
+- A & B overlap, B ends after A                             {A[B}]
+- A & B overlap, A ends after B                             [B{A]}
+- A overlaps B completely, A starts before and ends after B {A[B]}
+- B overlaps A completely, B starts before and ends after A [{A}B]
 '''
 
 '''
@@ -23,12 +23,11 @@ Intervals: [[1,4], [2,5], [7,9]]
 Mutually Exclusive Intervals: [[1,5], [7,9]]
 
 Approach
-- sort intervals by start time
-- if we reduce our scenarios such that A.start <= B.start we are left with 4 scenarios
-  1. A & B don't overlap
-  2. A & B overlap, B ends after A
-  3. A completely overlaps B, A starts before and ends after B
-  4. B completely overlaps A but they share start time
+- sort intervals by start time such that A.start is always <= B.start, leaving 4 scenarios
+  1. A & B don't overlap                                        {A}[B]
+  2. A & B overlap, B ends after A                              {A[B}]
+  3. A completely overlaps B, A starts before and ends after B  {A[B]}
+  4. B completely overlaps A BUT they share start time          [{A}B] <-- more specific than scenario 6 above
 - in scenario 2, 3 & 4 we merge according to different rules (1 has no overlaps so no merge)
   1. no merge
   2. A.start - B.end
