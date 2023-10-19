@@ -81,3 +81,58 @@ tests = [
 
 for i in tests:
     print(mergeIntervals(i))
+
+
+'''
+Problem
+Given a list of jobs, each with a start/end time and CPU load (while running),
+find the max CPU load at any time if all jobs are running on the same machine.
+
+Example
+Jobs: [
+    {start: 1, end: 4, load: 3},
+    {start: 2, end: 5, load: 4},
+    {start: 7, end: 9, load: 6}
+]
+Output: 7 i.e. the first two jobs are the only overlap, summing their load equals 7
+
+Approach
+- sort intervals by start time such that A.start is always <= B.start, leaving 4 scenarios
+  1. A & B don't overlap                                        {A}[B]
+  2. A & B overlap, B ends after A                              {A[B}]
+  3. A completely overlaps B, A starts before and ends after B  {A[B]}
+  4. B completely overlaps A BUT they share start time          [{A}B] <-- more specific than scenario 6 above
+- in scenario 2, 3 & 4 we merge according to different rules (1 has no overlaps so no merge)
+  1. no merge
+  2. A.start - B.end
+  3. A.start - A.end
+  4. A.start - B.end
+- when combining 2 intervals, add load times to compare against our running max CPU
+'''
+
+
+def maxCPULoad(jobs):
+
+    pass
+
+
+tests = [
+    [
+        {'start': 1, 'end': 4, 'load': 3},
+        {'start': 2, 'end': 5, 'load': 4},
+        {'start': 7, 'end': 9, 'load': 6}
+    ],  # 7 i.e. jobs 1 & 2
+    [
+        {'start': 6, 'end': 7,  'load': 10},
+        {'start': 2, 'end': 4,  'load': 11},
+        {'start': 8, 'end': 12, 'load': 15}
+    ],   # 15 i.e. no overlap
+    [
+        {'start': 1, 'end': 4, 'load': 2},
+        {'start': 2, 'end': 4, 'load': 1},
+        {'start': 3, 'end': 6, 'load': 5}
+    ]   # 8 i.e. jobs 1, 2 & 3
+]
+
+for i in tests:
+    print(maxCPULoad(i))
